@@ -1,2 +1,2 @@
-# desktop-client
-Sticky Notes for the desktop
+# ClingyNotes desktop-client
+Sticky/Grouped Notes for the desktop

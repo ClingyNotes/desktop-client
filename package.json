@@ -1,29 +1,30 @@
 {
   "name": "desktop-client",
   "version": "1.0.0",
-  "description": "desktop client for the FlyingNotes app.",
+  "description": "desktop client for the ClingyNotes app.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FlyingNotes/desktop-client.git"
+    "url": "git+https://github.com/ClingyNotes/desktop-client.git"
   },
   "keywords": [
-    "sticky",
+    "sticky notes",
     "notes",
-    "notes",
-    "cross-platoform",
-    "notes"
+    "cross-platform notes",
+    "sync notes"
   ],
   "author": "Koushik Shetty, Bijal Parekh",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/FlyingNotes/desktop-client/issues"
+    "url": "https://github.com/ClingyNotes/desktop-client/issues"
   },
-  "homepage": "https://github.com/FlyingNotes/desktop-client#readme",
+  "homepage": "https://github.com/ClingyNotes/desktop-client#readme",
   "devDependencies": {
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "redux": "^3.7.2"
