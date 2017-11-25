@@ -1,20 +1,18 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-let extractTextPlugin = new ExtractTextPlugin({
-  filename: 'main.css',
-  disable: false,
-  allChunks: true,
-});
+const outputPath = `${__dirname}/dist`;
 
 module.exports = () => {
   return {
+    target: 'electron-main',
     entry: {
-      app: ['babel-polyfill', './src/js/index.js'],
+      window: ['babel-polyfill', './src/js/index.js'],
+      main: './main.js',
     },
     output: {
-      filename: 'app.js',
-      path: `${__dirname}/dist`,
+      filename: '[name].js',
+      path: outputPath,
       publicPath: '/',
     },
     resolve: {
@@ -24,40 +22,20 @@ module.exports = () => {
       rules: [
         {
           test: /\.(js|jsx)$/,
-          loader: 'babel-loader',
           exclude: /node_modules/,
-          options: {
-            presets: ['@babel/preset-env'],
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env','@babel/react'],
+            },
           },
-        },
-        {
-          test: /\.(png|jpe?g|gif)$/i,
-          use: [{ loader: 'url-loader', options: { limit: 10000 } }],
-        },
-        {
-          test: /\.scss/,
-          loader: extractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              'css-loader',
-              {
-                loader: 'sass-loader',
-                options: {
-                  includePaths: ['node_modules'],
-                },
-              },
-            ],
-          }),
         },
       ],
     },
     plugins: [
-      extractTextPlugin,
       new CopyWebpackPlugin([
-        { from: './public/*.html', to: `${outputPath}/index.html` },
-        { from: './src/assets/images', to: `${outputPath}/assets/images` },
-        { from: './src/assets/fonts', to: `${outputPath}/assets/fonts` },
-        { from: './web.config', to: outputPath },
+        {from: 'index.html', to: `${outputPath}/index.html`},
+        {from: 'package.json', to: `${outputPath}/package.json`},
       ]),
     ],
   };
