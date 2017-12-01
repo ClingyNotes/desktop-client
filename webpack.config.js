@@ -1,5 +1,12 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
+
+let extractTextPlugin = new ExtractTextPlugin({
+  filename: 'main.css',
+  disable: false,
+  allChunks: true,
+});
 
 const outputPath = `${__dirname}/dist`;
 
@@ -18,6 +25,10 @@ module.exports = () => {
     resolve: {
       extensions: ['.jsx', '.js', '.json'],
     },
+    node: {
+      __dirname: false,
+      __filename: false,
+    },
     module: {
       rules: [
         {
@@ -26,16 +37,39 @@ module.exports = () => {
           use: {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env','@babel/react'],
+              cacheDirectory: true,
+              presets: ['@babel/preset-env', '@babel/react'],
             },
           },
+        },
+        {
+          test: /\.(png|jpe?g|gif)$/i,
+          use: [{ loader: 'url-loader', options: { limit: 10000 } }],
+        },
+        {
+          test: /\.scss/,
+          loader: extractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
+              'css-loader',
+              {
+                loader: 'sass-loader',
+                options: {
+                  includePaths: ['node_modules'],
+                },
+              },
+            ],
+          }),
         },
       ],
     },
     plugins: [
+      new webpack.optimize.UglifyJsPlugin(),
       new CopyWebpackPlugin([
-        {from: 'index.html', to: `${outputPath}/index.html`},
-        {from: 'package.json', to: `${outputPath}/package.json`},
+        { from: 'index.html', to: `${outputPath}/index.html` },
+        { from: 'package.json', to: `${outputPath}/package.json` },
+        { from: './src/assets/images', to: `${outputPath}/assets/images` },
+        { from: './src/assets/fonts', to: `${outputPath}/assets/fonts` },
       ]),
     ],
   };
