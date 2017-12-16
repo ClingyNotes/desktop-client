@@ -64,10 +64,10 @@ module.exports = () => {
       ],
     },
     plugins: [
+      extractTextPlugin,
       new webpack.optimize.UglifyJsPlugin(),
       new CopyWebpackPlugin([
         { from: 'index.html', to: `${outputPath}/index.html` },
-        { from: 'package.json', to: `${outputPath}/package.json` },
         { from: './src/assets/images', to: `${outputPath}/assets/images` },
         { from: './src/assets/fonts', to: `${outputPath}/assets/fonts` },
       ]),
