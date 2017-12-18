@@ -7,4 +7,5 @@ module.exports = {
         "!**/dist/**"
     ],
     coverageDirectory: "./dist/coverage/",
+    testPathIgnorePatterns: ['/node_modules/', '/__tests__/utils/']
 };
