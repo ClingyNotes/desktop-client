@@ -2,14 +2,17 @@ import url from 'url';
 import path from 'path';
 import { BrowserWindow, app } from 'electron';
 
-import appConfig from '../backend/config/app';
+import defaultConfig from '../backend/config/app';
+
+import AppWindow from '../backend/appWindow';
 
 import '../../assets/stylesheets/main.scss';
 
 console.log(`App is starting at ${__dirname}`);
 
 export default class App {
-    constructor(config = appConfig) {
+    constructor(config = defaultConfig) {
+        this.config = config;
         // TODO: validate config
     }
 
@@ -19,25 +22,8 @@ export default class App {
                 window: {
                     width, height, center, frame
                 }
-            } = config;
-
-            // TODO: create window abstraction
-            let win = new BrowserWindow({
-                width, height, center, frame,
-                title: 'Clingy Notes',
-                useContentSize: true,
-            });
-
-            win.on('closed', () => {
-                win = null;
-            });
-
-            win.loadURL(url.format({
-                pathname: path.join(__dirname, 'index.html'),
-                protocol: 'file:',
-                slashes: true
-            }))
-            win.webContents.openDevTools();
+            } = this.config;
+            const win = new AppWindow(app, this.config)
         });
     }
 };

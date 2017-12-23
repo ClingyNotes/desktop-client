@@ -1,5 +1,5 @@
 
-import App from './src/js/backend/App';
+import App from './src/js/backend/app';
 
 // read config file
 // let config = config.load();

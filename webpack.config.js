@@ -14,7 +14,7 @@ module.exports = () => {
   return {
     target: 'electron-main',
     entry: {
-      window: ['babel-polyfill', './src/js/index.js'],
+      app: ['babel-polyfill', './src/js/index.js'],
       main: './main.js',
     },
     output: {
@@ -38,7 +38,6 @@ module.exports = () => {
             loader: 'babel-loader',
             options: {
               cacheDirectory: true,
-              presets: ['@babel/preset-env', '@babel/react'],
             },
           },
         },

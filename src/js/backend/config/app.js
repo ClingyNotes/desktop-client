@@ -1,4 +1,4 @@
-export default defaultSettings = {
+export default {
     window: {
         width: 500,
         height: 500,

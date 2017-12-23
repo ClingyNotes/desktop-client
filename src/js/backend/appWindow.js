@@ -1,10 +1,15 @@
 import { BrowserWindow, app } from 'electron';
+import url from 'url';
+import path from 'path';
 
 
 export default class AppWindow {
-    constructor(options) {
+    constructor(app, options) {
         // validate the options
         const result = this._validate(options);
+        if (!app) {
+            throw new Error('Error: app not supplied');
+        }
         if (!result.valid) {
             throw new Error(`Error validating options: ${result.message}`)
         }
