@@ -35,7 +35,8 @@ jobs:
         
       # run tests!
       - run: yarn test
-
-      # store artifacts
-      - store_artifacts:
-          path: dist
+      - run: npm run build
+      - test:
+          post:
+            - mkdir $CIRCLE_ARTIFACTS/dist
+            - mv dist/ $CIRCLE_ARTIFACTS/dist
