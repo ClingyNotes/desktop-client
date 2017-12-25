@@ -5,7 +5,7 @@
   "main": "./dist/main.js",
   "scripts": {
     "test": "./node_modules/jest/bin/jest.js",
-    "build": "webpack",
+    "build": "./node_modules/webpack/bin/webpack",
     "start": "NODE_ENV=development electron .",
     "clean": "rm -rf dist/"
   },
