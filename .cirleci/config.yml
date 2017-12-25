@@ -37,6 +37,5 @@ jobs:
       - run: yarn test
 
       # store artifacts
-      - general:
-          artifacts: 
-            - "/dist"
+      - store_artifacts:
+          path: dist
