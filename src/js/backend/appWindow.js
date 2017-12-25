@@ -13,6 +13,7 @@ export default class AppWindow {
         if (!result.valid) {
             throw new Error(`Error validating options: ${result.message}`)
         }
+        this.app = app;
         this._setup(options);
         this._window = null;
     }
@@ -40,7 +41,7 @@ export default class AppWindow {
 
         this._window.on('closed', () => {
             this._window = null;
-            oncCloseCb();
+            onCloseCb();
         });
 
         this._window.loadURL(url.format({
