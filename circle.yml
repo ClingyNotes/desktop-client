@@ -52,5 +52,5 @@ compile:
 
 test:
   post:
-    - mkdir $CIRCLE_ARTIFACTS/artifacts
-    - mv dist $CIRCLE_ARTIFACTS/artifacts
+    - mkdir $CIRCLE_ARTIFACTS/dist
+    - mv dist $CIRCLE_ARTIFACTS/dist
