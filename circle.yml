@@ -52,4 +52,5 @@ compile:
 
 test:
   post:
-    - mv dist $CIRCLE_ARTIFACTS/
+    - mkdir $CIRCLE_ARTIFACTS/artifacts
+    - mv dist $CIRCLE_ARTIFACTS/artifacts
