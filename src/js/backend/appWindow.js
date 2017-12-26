@@ -1,6 +1,7 @@
 import { BrowserWindow, app } from 'electron';
 import url from 'url';
 import path from 'path';
+import uuid4 from 'uuid';
 
 
 export default class AppWindow {
@@ -13,9 +14,13 @@ export default class AppWindow {
         if (!result.valid) {
             throw new Error(`Error validating options: ${result.message}`)
         }
+        this.getInstance = this.getInstance.bind(this);
         this.app = app;
         this._setup(options);
-        this._window = null;
+        this._window = {
+            id: uuid4(),
+            instance: null,
+        };
     }
 
     _validate(opts = {}) {
@@ -28,30 +33,36 @@ export default class AppWindow {
     _setup(opts) {
         const {
             window: { width, height, center, frame, onTop },
-            onCloseCb = ()=>{},
+            onCloseCb = () => { }, onCreateCb = () => { }
         } = opts;
 
 
-        this._window = new BrowserWindow({
+        const win = new BrowserWindow({
             width, height, center, frame,
             title: 'Clingy Notes',
             useContentSize: true,
             alwaysOnTop: onTop,
         });
 
-        this._window.on('closed', () => {
+        win.on('closed', () => {
             this._window = null;
             onCloseCb();
         });
 
-        this._window.loadURL(url.format({
+        win.loadURL(url.format({
             pathname: path.join(__dirname, 'index.html'),
             protocol: 'file:',
             slashes: true
         }))
-        
+
+        this._window.instance = this;
+
         if (process.env.NODE_ENV === 'development') {
-            this._window.webContents.openDevTools();
+            win.webContents.openDevTools();
         }
+    }
+
+    getInstance() {
+        return this._window;
     }
 }
